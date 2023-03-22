@@ -3,8 +3,13 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Hello! My name is Dan!' });
+  res.render('index', { title: 'Hello! Welcome! ' , name: 'Dan' });
 });
+router.get('/cats?', function (req, res, next) {
+  
+  res.render('index', { title: "cats" });
+});
+
 router.get('/:msg', function(req, res, next) {
   res.render('index', { title: req.params.msg });
 });
