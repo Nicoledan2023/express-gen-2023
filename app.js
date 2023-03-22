@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-//const usersRouter = require('./routes/users');
+const booksRouter = require('./routes/books');
 
 const app = express();
 
@@ -19,8 +19,27 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next) => { 
+  console.log("cookie user : " + req.cookies.user);
+ // console.log("a request has come in!");
+  if (req.query.u != undefined) {
+    req.login = {
+      username: req.query.u.toLowerCase().trim(),
+      auth: true
+    };
+  }
+    else { 
+    req.login = {
+      username: null,
+      auth: false
+    };
+  }
+ 
+  next();
+})
+
 app.use('/', indexRouter);
-//app.use('/users', usersRouter);
+app.use('/books/', booksRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
