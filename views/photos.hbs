@@ -1,0 +1,10 @@
+<div class="gallary">
+    {{#each this}}
+    {{if filename}}
+    <div class="gallary photo">
+        <img src="/images/gallery/{{filename}}" />
+        <p> {{description}} </p>
+    </div>
+    {{/if}}
+    {{/each}}
+</div>

@@ -1,27 +1,27 @@
 var express = require('express');
-var router = express.Router();
+const router = express.Router();
+const page = require('../model/page');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', {
-    layout:null,
+  loadPage('breeds',req,res,next);
+  /* res.render('index', {
+    layout: null,
     title: "My cite",
     name: req.login.auth ? req.login.username : "Guest"
-  });
-  /* res.render('index',
-  
-    {
-      title: 'Hello! Welcome! ',
-      name: req.login.auth ? req.login.username : "guest"
-    }); */
+  }); */
 });
 
-router.all('/', function (req, res, next) {
+router.get('/:key', async function (req, res, next) {
+  loadPage(req.params.key,req,res,next);
+});
+
+/* router.all('/', function (req, res, next) {
 
   res.render('index', { title: 'My cite'});
-});
+}); */
 
-router.all('/books/:fdgh', function (req, res, next) {
+/* router.all('/books/:fdgh', function (req, res, next) {
 
   res.render('index', { title: 'My cite' });
 });
@@ -46,7 +46,23 @@ router.get('/cat|dog/', function (req, res, next) {
 router.get('/:msg', function (req, res, next) {
   res.render('index', { title: req.params.msg });
 });
+ */
 
+let loadPage = async function (key,req,res,next) { 
+  const pg = await page.getPage(key);
+  console.log(pg);
+  if (pg.status == false) {
+    next();
+   
+  } else {
 
+    res.render('index', {
+     
+      title: pg.rows.title,
+      name: req.login.auth ? req.login.username : "Guest",
+      content: pg.rows.content
+    });
+  }
+};
 
 module.exports = router;
