@@ -1,10 +1,14 @@
-<div class="gallary">
-    {{#each this}}
-    {{if filename}}
-    <div class="gallary photo">
-        <img src="/images/gallery/{{filename}}" />
-        <p> {{description}} </p>
-    </div>
-    {{/if}}
-    {{/each}}
+{{> menu}}
+<div class="gallery">
+	{{#each data}}
+		
+		{{#if filename}}
+			<div class="gallery-photo">
+				<a href="./photo/{{photoid}}">
+					<img src="/images/gallery/{{filename}}" />
+				</a>
+				<p>{{description}}</p>
+			</div>
+		{{/if}}
+	{{/each}}
 </div>
