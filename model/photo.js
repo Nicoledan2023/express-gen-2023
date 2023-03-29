@@ -4,7 +4,7 @@ let photo = {
 	'getPhotos': async function () {
 
 		let conn = await db.getConnection();
-		const result = await conn.query("select photoid, filename, description,date_modified from photo order by date_modified desc");
+		const result = await conn.query("select photo_id, filename, description,date_modified from photo order by date_modified desc");
 
 		let status = conn.end();
 
@@ -17,7 +17,7 @@ let photo = {
 	},
 	'getPhoto': async function (id) {
 		let conn = await db.getConnection();
-		const result = await conn.query("select photoid, filename, description,date_modified from photo where photoid = ?", [id]);
+		const result = await conn.query("select photo_id, filename, description,date_modified from photo where photo_id = ?", [id]);
 
 		let status = conn.end();
 
@@ -27,6 +27,15 @@ let photo = {
 		};
 
 		return ret;
+	},
+	'addPhoto': async function (filename, description) {
+		let conn = await db.getConnection();
+		const result = await conn.query(
+			"insert into photo (filename, description) values (?,?)",
+			[filename, description]);
+
+		conn.end();
+		return result;
 	}
 
 };

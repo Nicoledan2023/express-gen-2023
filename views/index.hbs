@@ -2,6 +2,13 @@
 
 {{> menu}}
 
-<p>Hello, {{name}}</p>
+{{#if login.loggedIn}}
+	<ul>
+		<li><a href="/{{key}}/edit">Edit</a></li>
+		<li><a href="/addpage">Add Page</a></li>
+
+	</ul>
+{{/if}}
+
 
 <p class="content">{{{content}}}</p>
